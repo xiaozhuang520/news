@@ -9,6 +9,7 @@ import axios from "axios";
 import VueRouter from "vue-router";
 
 import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
@@ -19,7 +20,8 @@ Vue.use(VueRouter);
 Vue.use(Vant);
 
 var routes=[
-    {path:'/login',component:Login}
+    {path:'/login',component:Login},
+    {path:'/register',component:Register}
 ]
 var router=new VueRouter({
     routes

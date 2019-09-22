@@ -26,6 +26,9 @@
       err_message="密码格式有误"
       ></AuthInput> 
     </div>
+    <p>
+        还没有账号？<router-link to="/register">去注册</router-link>
+    </p>
     <AuthBtn @click="handleSubmit" text="登录"></AuthBtn>
   </div>
 </template>
@@ -81,6 +84,13 @@ export default {
       font-size: 127/360 * 100vw;
       color: #d81e06;
     }
+  }
+  p{
+      margin-top: 20px;
+      text-align: right;
+      a{
+          color: #317ef3;
+      }
   }
 }
 </style>

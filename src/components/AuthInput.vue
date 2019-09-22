@@ -46,7 +46,7 @@ export default {
 .input {
   width: 100%;
   height: 38/360 * 100vw;
-  padding: 20px 0;
+  padding: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
