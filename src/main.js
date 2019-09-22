@@ -1,12 +1,22 @@
-import Vue from "vue"
+import Vue from "vue";
 // + 导入App.vue
-import App from "./App"
+import App from "./App";
 
-import VueRouter from "vue-router"
+import Vant from 'vant';
 
-import Login from "@/pages/Login"
+import axios from "axios";
 
-Vue.use(VueRouter)
+import VueRouter from "vue-router";
+
+import Login from "@/pages/Login";
+
+// 绑定到原型
+Vue.prototype.$axios = axios;
+
+axios.defaults.baseURL = "http://localhost:3000"
+
+Vue.use(VueRouter);
+Vue.use(Vant);
 
 var routes=[
     {path:'/login',component:Login}
@@ -19,6 +29,6 @@ new Vue({
     el: "#app",
     router,
     render: function(createElement){
-        return createElement(App)
+        return createElement(App);
     }
 })
