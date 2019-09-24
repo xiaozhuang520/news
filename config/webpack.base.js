@@ -7,6 +7,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // 引入vue-loader插件
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+const CopyPlugin = require("copy-webpack-plugin") 
 module.exports = {
     entry:{
         main:'./src/main.js'
@@ -88,6 +90,9 @@ module.exports = {
             template: "public/index.html"	// template指定默认html模板
         }),
             // vue加载器插件
-         new VueLoaderPlugin()
+         new VueLoaderPlugin(),
+         new CopyPlugin([
+            { from: 'static', to: 'static' },
+        ])
     ]
 }

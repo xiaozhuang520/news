@@ -61,7 +61,11 @@ export default {
            }).then(res=>{
                const {message}=res.data;
                if(message==="登录成功"){
-                   this.$router.push('/')
+                localStorage.setItem('user_id',res.data.data.user.id);
+                localStorage.setItem('token',res.data.data.token);
+                   this.$router.push('/personal')
+               }else{
+                  this.$toast.fail(message)
                }
            })
         }
