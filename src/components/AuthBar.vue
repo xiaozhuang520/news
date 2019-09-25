@@ -2,7 +2,7 @@
   <div class="content">
      <div class="userInfo" @click="$emit('click')">
         <span>{{name}}</span>
-        <i>{{text}}</i>
+        <i>{{type==='possword'?'******': text}}</i>
         <span class="iconfont iconjiantou1"></span>
       </div> 
   </div>
@@ -11,7 +11,7 @@
 <script>
 
 export default {
-    props:['text','name'],
+    props:['text','name','type'],
 }
 </script>
 
@@ -22,7 +22,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 60/360*100vw;
+        height: 40/360*100vw;
         border-bottom: 1px solid #eee;
         i{
             flex: 1;

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="personal">
+    <div class="personal" @click="handleEdit">
       <img :src="userParticulars.head_img" alt />
-      <div class="personal_introduce">
+      <div class="personal_introduce" >
         <div class="personal_text">
           <span class="iconfont iconxingbienv"></span>
           {{userParticulars.nickname}}
@@ -11,8 +11,8 @@
       </div>
       <span class="iconfont iconjiantou1"></span>
     </div>
-    <AuthBar name="我的关注" text="关注的用户"></AuthBar>
-    <AuthBar name="我的跟帖" text="跟帖/回复"></AuthBar>
+    <AuthBar name="我的关注" text="关注的用户" @click="handleMyAttention"></AuthBar>
+    <AuthBar name="我的跟帖" text="跟帖/回复"  @click="handleMyFollow"></AuthBar>
     <AuthBar name="我的收藏" text="文章/视频"></AuthBar>
     <AuthBar name="退出" @click="handleLoginOut"></AuthBar>
   </div>
@@ -34,6 +34,15 @@ export default {
       localStorage.removeItem("user_id");
       localStorage.removeItem("token");
       this.$router.replace("/login");
+    },
+    handleEdit(){
+      this.$router.push('/EditUser')
+    },
+    handleMyAttention(){
+      this.$router.push('/myattention')
+    },
+    handleMyFollow(){
+      this.$router.push('/myfollow')
     }
   },
   mounted() {

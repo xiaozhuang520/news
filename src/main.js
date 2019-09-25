@@ -12,6 +12,9 @@ import VueRouter from "vue-router";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
+import EditUser from "@/pages/EditUser";
+import MyAttention from "@/pages/MyAttention";
+import MyFollow from "@/pages/MyFollow";
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
@@ -24,7 +27,10 @@ Vue.use(Vant);
 var routes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
-    { path: '/personal', component: Personal }
+    { path: '/personal', component: Personal },
+    { path: '/edituser', component: EditUser },
+    { path: '/myattention', component: MyAttention },
+    { path: '/myfollow', component: MyFollow }
 ]
 
 
@@ -48,7 +54,7 @@ axios.interceptors.response.use(res => {
 
 router.beforeEach((to,from,next)=>{
     const userToken=localStorage.getItem('token')
-    if(to.path=='/personal'){
+    if(to.path=='/personal' || to.path=='/edituser'){
         if(userToken){
           return next()
         }else{
