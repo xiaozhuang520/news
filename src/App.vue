@@ -20,6 +20,9 @@ export default {
 @import url('../node_modules/vant/lib/index.css');
 /* 项目页面初始化文件 */
 /*清除内外边距  */
+body{
+    background: #f6f6f6;
+}
 html,
 body,
 h1,

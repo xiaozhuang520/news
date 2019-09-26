@@ -15,6 +15,7 @@ import Personal from "@/pages/Personal";
 import EditUser from "@/pages/EditUser";
 import MyAttention from "@/pages/MyAttention";
 import MyFollow from "@/pages/MyFollow";
+import Index from "@/pages/Index";
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
@@ -30,7 +31,8 @@ var routes = [
     { path: '/personal', component: Personal },
     { path: '/edituser', component: EditUser },
     { path: '/myattention', component: MyAttention },
-    { path: '/myfollow', component: MyFollow }
+    { path: '/myfollow', component: MyFollow },
+    { path: '/', component: Index },
 ]
 
 
