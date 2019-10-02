@@ -1,6 +1,6 @@
 <template>
   <div class="template">
-    <span class="iconfont iconjiantou" @click="$emit('click')"></span>
+    <span class="iconfont iconjiantou" @click="$router.back()"></span>
     <i>{{text}}</i>
   </div>
 </template>

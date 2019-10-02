@@ -1,45 +1,58 @@
 <template>
   <div>
     <!-- 渲染图片小于3张的列表 -->
-    <div
-      class="post_list"
-      v-if="post.cover.length>0 || post.cover.length<3 && post.type===1"
-    >
+    <div class="post_list" v-if="post.cover.length<3 && post.type===1">
       <div class="post_content">
-        <div class="title">{{post.title}}</div>
+        <router-link :to="/post_detail/+post.id">
+          <div class="title">{{post.title}}</div>
+        </router-link>
         <p>
           <span>{{post.user.nickname}}</span>
           <i>{{post.comment_length}}跟帖</i>
         </p>
       </div>
       <div class="post_img">
-        <img :src="post.cover[0].url" alt />
+        <router-link :to="/post_detail/+post.id">
+          <img :src="post.cover[0].url" alt />
+        </router-link>
       </div>
     </div>
 
-    <!-- 渲染图片为3张以上的列表 --> 
-   <div class="post_list2" v-if="post.cover.length>=3 && post.type===1" >
+    <!-- 渲染图片为3张以上的列表 -->
+    <div class="post_list2" v-if="post.cover.length>=3">
       <div class="post_content">
-        <div class="title">{{post.title}}</div>
+        <router-link :to="/post_detail/+post.id">
+          <div class="title">{{post.title}}</div>
+        </router-link>
       </div>
-      <div class="post_img" >
-        <img v-for="(item,index) in post.cover" :key="index"  :src="item.url" alt />
+      <div class="img_list">
+        <div class="post_img" v-for="(item,index) in post.cover" :key="index">
+          <router-link :to="/post_detail/+post.id">
+            <img :src="item.url" />
+          </router-link>
+        </div>
       </div>
+
       <p>
         <span>{{post.user.nickname}}</span>
         <i>{{post.comment_length}}跟帖</i>
       </p>
     </div>
 
-     <!-- //渲染视频列表 --> 
- <div class="post_video"  v-if="post.type===2 && post.cover.length===1">
+    <!-- //渲染视频列表 -->
+    <div class="post_video" v-if="post.type===2 && post.cover.length===1">
       <div class="post_content">
-        <div class="title">{{post.title}}</div>
+        <router-link :to="/post_detail/+post.id">
+          <div class="title">{{post.title}}</div>
+        </router-link>
       </div>
       <div class="video">
         <img :src="post.cover[0].url" alt />
+
         <div class="box">
-          <i class="iconfont iconshipin"></i>
+          <router-link :to="/post_detail/+post.id">
+            <i class="iconfont iconshipin"></i>
+          </router-link>
         </div>
       </div>
       <p>
@@ -52,10 +65,7 @@
 
 <script>
 export default {
-  props: ["post"],
-  mounted(){
-    //   console.log(this.post)
-  }
+  props: ["post"]
 };
 </script>
 
@@ -105,15 +115,20 @@ export default {
       overflow: hidden;
     }
   }
-  .post_img {
+  .img_list {
     display: flex;
     justify-content: space-between;
-    img {
-      display: block;
+    .post_img {
       width: 33%;
-      object-fit: cover;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
+
   p {
     margin-top: 10px;
     color: #868686;
@@ -151,7 +166,7 @@ export default {
       position: absolute;
       width: 55/360 * 100vw;
       height: 55/360 * 100vw;
-      background: #9aa4ad;
+      background: #9ca4ac;
       border-radius: 50%;
       opacity: 0.6;
       i {

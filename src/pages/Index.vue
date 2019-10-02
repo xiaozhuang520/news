@@ -34,10 +34,10 @@ import AuthList from "@/components/AuthList";
 export default {
   data() {
     return {
-      active: 1,
+      active: localStorage.getItem("token") ? 1 : 0,
       cid: 999,
       category: [],
-      pageSize:5
+      pageSize: 5
     };
   },
   methods: {
@@ -50,7 +50,10 @@ export default {
           if (data.length < this.pageSize) {
             this.category[this.active].finished = true;
           }
-          this.category[this.active].posts = [...this.category[this.active].posts, ...data];
+          this.category[this.active].posts = [
+            ...this.category[this.active].posts,
+            ...data
+          ];
           this.category[this.active].pageIndex++;
           this.category[this.active].loading = false;
         });
@@ -75,13 +78,14 @@ export default {
     // 获取栏目列表数据
     this.$axios(comfig).then(res => {
       const { data } = res.data;
+      
       const newData = [];
       data.forEach(item => {
         item.posts = [];
         item.loading = false;
         item.finished = false;
-        item.pageIndex=1;
-        newData.push(item)
+        item.pageIndex = 1;
+        newData.push(item);
       });
       this.category = newData;
       //   获取文章列表数据
@@ -105,24 +109,27 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 45/360 *100vw;
   padding: 0 10px;
   background: #f00;
   color: #ffe9e9;
   .header_search {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 5px 60px;
+    flex: 1;
+    height: 25/360 *100vw;
+    margin: 0 30/360 *100vw;
     border-radius: 50px;
+    font-size: 14px;
     background: #f97979;
   }
   .logo {
-    font-size: 60/360 * 100vw;
+    font-size: 50/360 * 100vw;
   }
   .user {
     span {
-      font-size: 28/360 * 100vw;
+      font-size: 25/360 * 100vw;
       color: #ffe9e9;
     }
   }

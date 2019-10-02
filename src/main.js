@@ -16,6 +16,8 @@ import EditUser from "@/pages/EditUser";
 import MyAttention from "@/pages/MyAttention";
 import MyFollow from "@/pages/MyFollow";
 import Index from "@/pages/Index";
+import PostDetail from "@/pages/PostDetail";
+import Comment from "@/pages/Comment";
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
@@ -32,7 +34,11 @@ var routes = [
     { path: '/edituser', component: EditUser },
     { path: '/myattention', component: MyAttention },
     { path: '/myfollow', component: MyFollow },
-    { path: '/', component: Index },
+    { path: '/post_detail/:id', component: PostDetail },
+    { path: '/comment/:id', component: Comment },
+
+    { path: '/', component: Index }
+
 ]
 
 
@@ -49,20 +55,20 @@ axios.interceptors.response.use(res => {
         router.push('/login')
     }
     return res;
-},function(err){
-	// 请求后台失败时候的错误
-    return Toast.fail("网络错误");  
+}, function (err) {
+    // 请求后台失败时候的错误
+    return Toast.fail("网络错误");
 })
 
-router.beforeEach((to,from,next)=>{
-    const userToken=localStorage.getItem('token')
-    if(to.path=='/personal' || to.path=='/edituser'){
-        if(userToken){
-          return next()
-        }else{
+router.beforeEach((to, from, next) => {
+    const userToken = localStorage.getItem('token')
+    if (to.path == '/personal' || to.path == '/edituser') {
+        if (userToken) {
+            return next()
+        } else {
             return router.push('/login')
         }
-    }else{
+    } else {
         next()
     }
 })

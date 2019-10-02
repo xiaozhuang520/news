@@ -12,7 +12,7 @@ module.exports = {
     },
     devtool: "source-map", // + 生成映射源代码文件
     devServer: {
-        port: 8000 // 默认端口是8080
+        port: 8080 // 默认端口是8080
    },
     module: {
         
