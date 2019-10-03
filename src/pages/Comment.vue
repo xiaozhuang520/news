@@ -41,7 +41,7 @@ export default {
       comments: [],
       detail: {},
       replay: null,
-      cid: 999,
+     
       pageIndex: 1,
       pageSize: 10,
       loading: false,
@@ -64,7 +64,7 @@ export default {
         this.comments=[];
       }
       this.$axios({
-        url: `/post_comment/${id}?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&category=${this.cid}`
+        url: `/post_comment/${id}?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
       }).then(res => {
         const { data } = res.data;
         if(data.length<this.pageSize){

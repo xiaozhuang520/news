@@ -2,10 +2,14 @@
   <div>
     <div class="header">
       <span class="iconfont iconnew logo"></span>
+
       <div class="header_search">
-        <span class="iconfont iconsearch"></span>
-        <i>搜索新闻</i>
+        <router-link to="/new_search">
+          <span class="iconfont iconsearch"></span>
+          <i>搜索新闻</i>
+        </router-link>
       </div>
+
       <router-link to="/personal" class="user">
         <span class="iconfont iconwode"></span>
       </router-link>
@@ -78,7 +82,7 @@ export default {
     // 获取栏目列表数据
     this.$axios(comfig).then(res => {
       const { data } = res.data;
-      
+
       const newData = [];
       data.forEach(item => {
         item.posts = [];
@@ -109,7 +113,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 45/360 *100vw;
+  height: 60/360 * 100vw;
   padding: 0 10px;
   background: #f00;
   color: #ffe9e9;
@@ -118,14 +122,17 @@ export default {
     justify-content: center;
     align-items: center;
     flex: 1;
-    height: 25/360 *100vw;
-    margin: 0 30/360 *100vw;
+    height: 40/360 * 100vw;
+    margin: 0 20/360 * 100vw;
     border-radius: 50px;
     font-size: 14px;
     background: #f97979;
+    a{
+      color: #fff;
+    }
   }
   .logo {
-    font-size: 50/360 * 100vw;
+    font-size: 60/360 * 100vw;
   }
   .user {
     span {

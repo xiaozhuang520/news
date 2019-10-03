@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AuthTopBar text="我的关注" @click="handleClick"/>
+    <AuthTopBar text="我的跟帖" @click="handleClick"/>
     <div class="follow" v-for="(item,index) in list" :key="index">
       <div class="time">2019-10-10 10:20</div>
       <div class="parent" v-if="item.parent">

@@ -18,6 +18,8 @@ import MyFollow from "@/pages/MyFollow";
 import Index from "@/pages/Index";
 import PostDetail from "@/pages/PostDetail";
 import Comment from "@/pages/Comment";
+import NewSearch from "@/pages/NewSearch";
+import MyFavorite from "@/pages/MyFavorite";
 
 // 绑定到原型
 Vue.prototype.$axios = axios;
@@ -36,6 +38,8 @@ var routes = [
     { path: '/myfollow', component: MyFollow },
     { path: '/post_detail/:id', component: PostDetail },
     { path: '/comment/:id', component: Comment },
+    { path: '/new_search', component: NewSearch },
+    { path: '/myfavorite', component: MyFavorite },
 
     { path: '/', component: Index }
 

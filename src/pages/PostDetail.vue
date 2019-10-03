@@ -7,7 +7,7 @@
           <i class="iconfont iconnew" @click="$router.back()"></i>
         </div>
         <span class="comment" v-if="!detail.has_follow" @click="handleFollow">+ 关注</span>
-        <span class="comment follow" v-if="detail.has_follow" @click="handleunFollow"> 已关注</span>
+        <span class="comment follow" v-if="detail.has_follow" @click="handleunFollow">已关注</span>
       </div>
       <div class="post_content">
         <h3>{{detail.title}}</h3>
@@ -17,8 +17,33 @@
         </div>
         <div class="content" v-html="detail.content"></div>
       </div>
+
       <LikeAndWXBtn @click="handleLike" :detail="detail" />
-      <PostFooter @click="handleStar" :detail="detail" />
+      <div class="good_comments">
+        <h3>精彩跟帖</h3>
+        <div class="comment">
+            <!-- 列表渲染 -->
+            <div class="comment_content" v-for="(item,index) in comments" :key="index">
+              <div class="comment_user">
+                <img :src="$axios.defaults.baseURL+item.user.head_img" alt />
+                <div class="comment_name_time">
+                  <p>{{item.user.nickname}}</p>
+                  <span>2小时前</span>
+                </div>
+                <span class="replay" @click="handleReplay(item)">回复</span>
+              </div>
+
+              <CommentReplay :data="item.parent" v-if="item.parent" @handleReplay="handleReplay" />
+              <div class="content">{{item.content}}</div>
+            </div>
+        </div>
+        <p v-if="comments.length===0" class="zantie">暂无跟帖，抢占沙发</p>
+      </div>
+      <router-link :to="'/comment/'+detail.id">
+        <span class="more_comments" v-if="comments.length>=2">更多跟帖</span>
+      </router-link>
+        
+      <PostFooter @click="handleStar" :detail="detail" @getComment="getComment"/>
     </div>
 
     <div class="post_video" v-if="detail.type===2">
@@ -39,8 +64,32 @@
         </div>
         <div class="content">{{detail.title}}</div>
       </div>
+      
       <LikeAndWXBtn @click="handleLike" :detail="detail" />
-      <PostFooter @click="handleStar" :detail="detail" />
+      <div class="good_comments">
+        <h3>精彩跟帖</h3>
+        <div class="comment">
+            <!-- 列表渲染 -->
+            <div class="comment_content" v-for="(item,index) in comments" :key="index">
+              <div class="comment_user">
+                <img :src="$axios.defaults.baseURL+item.user.head_img" alt />
+                <div class="comment_name_time">
+                  <p>{{item.user.nickname}}</p>
+                  <span>2小时前</span>
+                </div>
+                <span class="replay" @click="handleReplay(item)">回复</span>
+              </div>
+
+              <CommentReplay :data="item.parent" v-if="item.parent" @handleReplay="handleReplay" />
+              <div class="content">{{item.content}}</div>
+            </div>
+        </div>
+        <p v-if="comments.length===0" class="zantie">暂无跟帖，抢占沙发</p>
+      </div>
+      <router-link :to="'/comment/'+detail.id">
+        <span class="more_comments" v-if="comments.length>=2">更多跟帖</span>
+      </router-link>
+      <PostFooter @click="handleStar" :detail="detail" @getComment="getComment"/>
     </div>
   </div>
 </template>
@@ -48,17 +97,24 @@
 <script>
 import LikeAndWXBtn from "@/components/LikeAndWXBtn";
 import PostFooter from "@/components/PostFooter";
+import CommentReplay from "@/components/CommentReplay";
 export default {
   data() {
     return {
+      comments: [],
+      replay: null,
       detail: {
         user: {}
-      }
+      },
+      pageIndex: 1,
+      pageSize: 2,
+      isReplay: ""
     };
   },
   mounted() {
-    // 获取文章数据
     const { id } = this.$route.params;
+    this.getComment(id);
+    // 获取文章数据
     const config = {
       url: "/post/" + id
     };
@@ -71,10 +127,26 @@ export default {
       const { data } = res.data;
 
       this.detail = data;
-      
     });
+    
   },
   methods: {
+    getComment(id, isReplay) {
+      if (isReplay === "isReplay") {
+        this.pageIndex = 1;
+        this.comments = [];
+      }
+      this.$axios({
+        url: `/post_comment/${id}?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+      }).then(res => {
+        const { data } = res.data;
+        this.comments = [...this.comments, ...data];
+        
+      });
+    },
+    handleReplay(item) {
+      this.replay = item;
+    },
     // 关注文章
     handleFollow() {
       const id = this.detail.user.id;
@@ -166,7 +238,8 @@ export default {
 
   components: {
     LikeAndWXBtn,
-    PostFooter
+    PostFooter,
+    CommentReplay
   }
 };
 </script>
@@ -226,8 +299,124 @@ export default {
       }
     }
   }
+  .good_comments {
+    border-top: 5px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    .zantie{
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 12px;
+      color: #cbcbcb;
+    }
+    h3 {
+      margin: 20px 0;
+      text-align: center;
+      font-weight: normal;
+    }
+    .comment {
+      margin-bottom: 20px;
+      .comment_content {
+        padding: 10px;
+        .comment_user {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          img {
+            display: block;
+            width: 40/360 * 100vw;
+            height: 40/360 * 100vw;
+            border-radius: 50%;
+          }
+          .comment_name_time {
+            flex: 1;
+            padding-left: 10px;
+            span {
+              font-size: 12px;
+              color: #707070;
+            }
+          }
+          .replay {
+            font-size: 13px;
+            color: #707070;
+          }
+        }
+        .content {
+          margin-top: 15px;
+        }
+      }
+    }
+    
+  }
+  .more_comments{
+      display: block;
+      width: 120px;
+      height: 25px;
+      margin: 20px auto;
+      line-height: 25px;
+      text-align: center;
+      border-radius: 50px;
+      border: 1px solid #666;
+    }
 }
 .post_video {
+  margin-bottom: 60px;
+  .good_comments {
+    border-top: 5px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    .zantie{
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 12px;
+      color: #cbcbcb;
+    }
+    h3 {
+      margin: 20px 0;
+      text-align: center;
+      font-weight: normal;
+    }
+    .comment {
+      margin-bottom: 20px;
+      .comment_content {
+        padding: 10px;
+        .comment_user {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          img {
+            display: block;
+            width: 40/360 * 100vw;
+            height: 40/360 * 100vw;
+            border-radius: 50%;
+          }
+          .comment_name_time {
+            flex: 1;
+            padding-left: 10px;
+            span {
+              font-size: 12px;
+              color: #707070;
+            }
+          }
+          .replay {
+            font-size: 13px;
+            color: #707070;
+          }
+        }
+        .content {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+  .more_comments{
+      display: block;
+      width: 120px;
+      height: 25px;
+      margin: 20px auto;
+      line-height: 25px;
+      text-align: center;
+      border-radius: 50px;
+      border: 1px solid #666;
+    }
   .video {
     width: 100%;
   }

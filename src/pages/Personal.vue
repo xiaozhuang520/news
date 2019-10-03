@@ -13,7 +13,9 @@
     </div>
     <AuthBar name="我的关注" text="关注的用户" @click="handleMyAttention"></AuthBar>
     <AuthBar name="我的跟帖" text="跟帖/回复"  @click="handleMyFollow"></AuthBar>
-    <AuthBar name="我的收藏" text="文章/视频"></AuthBar>
+    <router-link to="/myfavorite">
+      <AuthBar name="我的收藏" text="文章/视频" ></AuthBar>
+    </router-link>
     <AuthBar name="退出" @click="handleLoginOut"></AuthBar>
   </div>
 </template>
