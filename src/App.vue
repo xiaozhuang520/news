@@ -1,6 +1,8 @@
 <template>
 	<!-- template最外层只能包含一个标签 -->
-  	<router-view></router-view>
+  	<keep-alive include="index,search">
+          <router-view></router-view>
+      </keep-alive>
 	  
 </template>
 

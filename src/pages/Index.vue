@@ -36,6 +36,7 @@
 <script>
 import AuthList from "@/components/AuthList";
 export default {
+  name:"index",
   data() {
     return {
       active: localStorage.getItem("token") ? 1 : 0,

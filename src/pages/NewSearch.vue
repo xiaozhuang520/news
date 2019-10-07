@@ -4,7 +4,7 @@
       <em class="iconfont iconjiantou2" @click="$router.back()"></em>
       <div class="search">
         <i class="iconfont iconsearch"></i>
-        <input type="text" placeholder="通灵兽消失术" ref="search_content" />
+        <input type="text" placeholder="通灵兽消失术" v-model="value" ref="search_content" />
       </div>
       <span class="search_btn" @click="handleSearch">搜索</span>
     </div>
@@ -19,27 +19,42 @@
 <script>
 import AuthList from "@/components/AuthList";
 export default {
+  name:"search",
   data() {
     return {
       post: [],
       histories: [],
+      value:'',
       status: true
     };
+  },
+  beforeRouteEnter(to,from,next){
+   if(from.path==='\/'){
+      next(vm=>{
+        vm.post=[];
+        vm.value='';
+        vm.status = true;
+      })
+   }else{
+     next()
+   }
   },
   mounted() {
     this.histories = JSON.parse(localStorage.getItem("histories")) || [];
   },
   methods: {
     handleSearch() {
-      this.status = false;
-      const value = this.$refs.search_content.value;
+      
+      const value = this.value;
       this.$axios({
         url: "/post_search?keyword=" + value
       }).then(res => {
         const { data } = res.data;
         this.post = data;
+        this.status = false;
         if (JSON.stringify(this.histories).indexOf(value) < 0) {
           this.histories.push(value);
+          
         }
 
         localStorage.setItem("histories", JSON.stringify(this.histories));
