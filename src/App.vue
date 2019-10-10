@@ -19,6 +19,7 @@ export default {
 
 <style>
 @import url('http://at.alicdn.com/t/font_1426139_h6vn3jbl5q.css');
+@import url('http://at.alicdn.com/t/font_1448405_bnb534j49j8.css');
 @import url('../node_modules/vant/lib/index.css');
 /* 项目页面初始化文件 */
 /*清除内外边距  */

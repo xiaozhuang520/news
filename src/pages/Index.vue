@@ -2,7 +2,6 @@
   <div>
     <div class="header">
       <span class="iconfont iconnew logo"></span>
-
       <div class="header_search">
         <router-link to="/new_search">
           <span class="iconfont iconsearch"></span>
@@ -11,7 +10,7 @@
       </div>
 
       <router-link to="/personal" class="user">
-        <span class="iconfont iconwode"></span>
+        <span class="iconfont iconyonghu"></span>
       </router-link>
     </div>
     <van-tabs v-model="active" sticky swipeable>
@@ -25,6 +24,7 @@
           @load="onLoad"
           :immediate-check="false"
         >
+        <van-loading type="spinner" color="#1989fa" style="text-align:center; margin-top:20px;" v-if='category[active].posts.length===0 && !category[active].finished'></van-loading>
           <!-- 列表渲染 -->
           <AuthList v-for="(posts,index) in category[active].posts" :key="index" :post="posts" />
         </van-list>
@@ -116,7 +116,7 @@ export default {
   align-items: center;
   height: 60/360 * 100vw;
   padding: 0 10px;
-  background: #f00;
+  background: #d4008e;
   color: #ffe9e9;
   .header_search {
     display: flex;
@@ -127,22 +127,22 @@ export default {
     margin: 0 20/360 * 100vw;
     border-radius: 50px;
     font-size: 14px;
-    background: #f97979;
+    background: rgba(255, 255, 255, .5);
     a{
       color: #fff;
     }
   }
   .logo {
-    font-size: 60/360 * 100vw;
+    font-size: 30/360 * 100vw;
   }
   .user {
     span {
-      font-size: 25/360 * 100vw;
+      font-size: 30/360 * 100vw;
       color: #ffe9e9;
     }
   }
 }
 /deep/ .van-tabs__nav {
-  background: #e4e4e4;
+  background: #dcdcdc;
 }
 </style>

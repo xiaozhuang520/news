@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 文章详情 -->
     <div class="post" v-if="detail.type===1">
       <div class="post_header">
         <div class="post_logo">
@@ -45,10 +46,10 @@
         
       <PostFooter @click="handleStar" :detail="detail" @getComment="getComment"/>
     </div>
-
+    <!-- 视频详情 -->
     <div class="post_video" v-if="detail.type===2">
       <video
-        src="https://video.pearvideo.com/mp4/adshort/20190929/cont-1607714-14436895_adpkg-ad_hd.mp4"
+        :src="detail.content"
         class="video"
         controls="controls"
         :poster="detail.cover[0].url"
@@ -127,6 +128,12 @@ export default {
       const { data } = res.data;
 
       this.detail = data;
+      const {cover}=this.detail;
+      cover.forEach(item=>{
+        if(item.url.indexOf('http')===-1){
+            item.url=this.$axios.defaults.baseURL+item.url;
+        }
+      })
     });
     
   },

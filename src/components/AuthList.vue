@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 渲染图片小于3张的列表 -->
-    <div class="post_list" v-if="post.cover.length<3 && post.type===1">
+    <div class="post_list" v-if="post.cover.length<3 && post.type===1 && post.open===1">
       <div class="post_content">
         <router-link :to="/post_detail/+post.id">
           <div class="title">{{post.title}}</div>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- 渲染图片为3张以上的列表 -->
-    <div class="post_list2" v-if="post.cover.length>=3">
+    <div class="post_list2" v-if="post.cover.length>=3 && post.open===1">
       <div class="post_content">
         <router-link :to="/post_detail/+post.id">
           <div class="title">{{post.title}}</div>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- //渲染视频列表 -->
-    <div class="post_video" v-if="post.type===2 && post.cover.length===1">
+    <div class="post_video" v-if="post.type===2 && post.cover.length===1 && post.open===1">
       <div class="post_content">
         <router-link :to="/post_detail/+post.id">
           <div class="title">{{post.title}}</div>
@@ -65,7 +65,14 @@
 
 <script>
 export default {
-  props: ["post"]
+  props: ["post"],
+  mounted(){
+    this.post.cover.forEach(e=>{
+      if(e.url.indexOf('http')===-1){
+        e.url=this.$axios.defaults.baseURL+e.url;
+      }
+    })
+  }
 };
 </script>
 
