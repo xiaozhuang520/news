@@ -14,8 +14,8 @@ export default {
             dome:"修改",
             dome1:"修改01",
             dome2:"修改02",
-            dome3:"修改到03"
-            
+            dome3:"修改到03",
+            dome4:"修改04"
 		}
 	}
 }
