@@ -13,7 +13,8 @@ export default {
 		return {
             dome:"修改",
             dome1:"修改01",
-            dome2:"修改02"
+            dome2:"修改02",
+            dome3:"修改到03"
 		}
 	}
 }
