@@ -11,10 +11,11 @@
 export default {
 	data(){
 		return {
-		
+            dome:"修改"
 		}
 	}
 }
+// 修改提交
 </script>
 
 <style>
