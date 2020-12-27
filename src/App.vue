@@ -11,7 +11,8 @@
 export default {
 	data(){
 		return {
-            dome:"修改"
+            dome:"修改",
+            dome1:"修改01"
 		}
 	}
 }
